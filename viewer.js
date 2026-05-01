@@ -1,5 +1,5 @@
 // 3D Point Cloud Viewer - Approach 1 LiDAR Only
-let scene, camera, renderer, currentCloud, autoRotate = true;
+let scene, camera, renderer, currentCloud, autoRotate = false;
 let mouseDown = false, mouseX = 0, mouseY = 0;
 let rotX = 0.6, rotY = 0, distance = 8, targetX = 0, targetY = 0, targetZ = 0;
 let currRotX = 0.6, currRotY = 0, currDistance = 8, currTargetX = 0, currTargetY = 0, currTargetZ = 0;

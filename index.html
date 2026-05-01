@@ -13,7 +13,7 @@
     <nav class="navbar">
         <div class="container">
             <div class="brand">
-                <img src="assets/logo.png" alt="Aorist" class="logo-img">
+                <img src="assets/logo_dark.png" alt="Aorist" class="logo-img" id="navLogo">
                 <div class="logo-text">Aorist Technologies</div>
             </div>
             <div class="nav-links">
@@ -38,7 +38,7 @@
                     <a href="#solution" class="btn">Explore the Solution</a>
                 </div>
                 <div class="hero-logo">
-                    <img src="assets/logo.png" alt="Aorist Technologies">
+                    <img src="assets/logo_dark.png" alt="Aorist Technologies" id="heroLogo">
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@
                     <p>Custom-trained on OpenThermalPose with CLAHE augmentation, achieving 89.2% mAP@50 to detect partially occluded survivors.</p>
                 </div>
                 <div class="card">
-                    <h3>Under $500 Hardware</h3>
+                    <h3>Under $2,000 Hardware</h3>
                     <p>Designed with a dual-ESP microcontroller architecture and D-Robotics RDK X5 compute module. Targeting a fraction of the cost of foreign alternatives.</p>
                 </div>
             </div>
@@ -173,7 +173,7 @@
             <div class="grid-3" style="margin-top: 2rem;">
                 <div class="card">
                     <h3>1. Government Contracts</h3>
-                    <p>Direct sales to Bangladesh FSCD and Army Corps of Engineers. $1,500–$3,000 unit price on a $500 COGS.</p>
+                    <p>Direct sales to Bangladesh FSCD and Army Corps of Engineers. $3,000–$5,000 unit price on a sub-$2,000 COGS.</p>
                 </div>
                 <div class="card">
                     <h3>2. Maintenance (AMS)</h3>
@@ -213,6 +213,11 @@
             const t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', t);
             document.getElementById('themeToggle').textContent = t === 'dark' ? 'Light Mode' : 'Dark Mode';
+            // Swap logos
+            const darkLogo = 'assets/logo_dark.png';
+            const lightLogo = 'assets/logo_light.png';
+            document.getElementById('navLogo').src = t === 'dark' ? darkLogo : lightLogo;
+            document.getElementById('heroLogo').src = t === 'dark' ? darkLogo : lightLogo;
             if (window.threeRenderer) window.threeRenderer.setClearColor(t === 'dark' ? 0x1a1f2e : 0xe5e7eb);
             if (window.scene && window.scene.fog) window.scene.fog.color.set(t === 'dark' ? 0x1a1f2e : 0xe5e7eb);
         }
