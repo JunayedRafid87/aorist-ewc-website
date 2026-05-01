@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aorist Technologies | Autonomous SAR Rovers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">Aorist Technologies</div>
+            <div class="nav-links">
+                <a href="#problem">Problem</a>
+                <a href="#solution">Solution</a>
+                <a href="#technology">Technology</a>
+                <a href="#market">Market</a>
+                <a href="#team">Team</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="section-tag">Search & Rescue Robotics</div>
+                <h1>Autonomous Mapping & Survivor Detection.</h1>
+                <p>Aorist Technologies builds low-cost, AI-powered rovers for disaster zones. We solve the bandwidth and cost barriers of tactical robotics for the developing world.</p>
+                <a href="#solution" class="btn">Explore the Solution</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="problem">
+        <div class="container">
+            <div class="grid-2">
+                <div>
+                    <div class="section-tag">The Problem</div>
+                    <h2>The 72-Hour Window.</h2>
+                    <p>When a structure collapses, responders have a 72-hour window to rescue survivors. Today, agencies in Bangladesh and South Asia rely on manual searching — a slow, dangerous process.</p>
+                    <br>
+                    <p>Current tactical UGVs (Unmanned Ground Vehicles) are prohibitively expensive ($70K-$200K) and rely on heavy 3D sensors that choke constrained wireless networks in disaster zones. They are built for high-bandwidth environments, not reality.</p>
+                </div>
+                <div class="card">
+                    <h3>The Limitations We Face</h3>
+                    <ul style="list-style-position: inside; color: var(--text-secondary); line-height: 2;">
+                        <li>Human responders cannot safely enter unstable structures.</li>
+                        <li>Existing robotic solutions are too expensive for developing nations.</li>
+                        <li>Dense 3D mapping data (15-21 Mbps) fails over congested wireless ad-hoc networks.</li>
+                        <li>Visual cameras fail in zero-visibility, smoke-filled environments.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="solution">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Our Solution</div>
+                <h2>Computational Offloading & Edge AI.</h2>
+                <p style="max-width: 600px; color: var(--text-secondary);">We engineered an autonomous rover that maps in 3D using only lightweight 2D data, while detecting survivors via thermally-trained AI.</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Push-Broom 3D Mapping</h3>
+                    <p>Instead of transmitting 3D point clouds, the rover sends lightweight 2D LiDAR slices (85ms delay). A base-station algorithm constructs the full 3D map from odometry.</p>
+                </div>
+                <div class="card">
+                    <h3>YOLOv11m Thermal AI</h3>
+                    <p>Custom-trained on the OpenThermalPose dataset with CLAHE augmentation, achieving 89.2% mAP@50 to detect partially occluded survivors in zero-light.</p>
+                </div>
+                <div class="card">
+                    <h3>Extreme Cost Efficiency</h3>
+                    <p>Built with a dual-ESP microcontroller architecture and D-Robotics RDK X5 compute module. Total hardware BOM is under $500 USD.</p>
+                </div>
+            </div>
+            
+            <div class="image-block" style="margin-top: 4rem;">
+                 <video autoplay loop muted playsinline src="https://raw.githubusercontent.com/JunayedRafid87/sar-rover/main/omnet_ap1.mp4"></video>
+            </div>
+        </div>
+    </section>
+
+    <section id="technology">
+        <div class="container">
+            <div class="grid-2">
+                <div>
+                    <div class="section-tag">Technology & Metrics</div>
+                    <h2>Validated Algorithmic IP.</h2>
+                    <p>Our architecture has been rigorously tested using Webots simulation and OMNeT++ wireless network modeling. This isn't theoretical; it's proven.</p>
+                    
+                    <div style="margin-top: 2rem;">
+                        <div class="metric-large">99.96%</div>
+                        <p style="color: var(--text-secondary);">Packet Delivery Rate (PDR) for safety-critical streams over 802.11 ad-hoc mesh.</p>
+                    </div>
+                    
+                    <div style="margin-top: 2rem;">
+                        <div class="metric-large">89.2%</div>
+                        <p style="color: var(--text-secondary);">mAP@50 accuracy for our YOLOv11m thermal survivor detection model.</p>
+                    </div>
+                </div>
+                <div class="image-block" style="background-color: var(--bg-tertiary); padding: 2rem; display:flex; align-items:center; justify-content:center;">
+                    <!-- Re-using an image from the repo -->
+                    <img src="https://raw.githubusercontent.com/JunayedRafid87/sar-rover/main/omnet_ap1.png" alt="OMNeT++ Network Simulation Results" style="border-radius: 4px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="market">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Business Model</div>
+                <h2>B2G Procurement & SaaS.</h2>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>1. Government Contracts</h3>
+                    <p>Direct sales to Bangladesh FSCD and Army Corps of Engineers. Targeting a $1,500-$3,000 unit price with a healthy margin on a $500 COGS.</p>
+                </div>
+                <div class="card">
+                    <h3>2. Maintenance (AMS)</h3>
+                    <p>Post-deployment service agreements covering firmware updates, calibration, and battery replacements (estimated 10-15% of unit cost annually).</p>
+                </div>
+                <div class="card">
+                    <h3>3. Data Dashboard (SaaS)</h3>
+                    <p>Long-term cloud-based mission dashboard subscription for incident commanders to review 3D maps and AI logs in real-time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Team</div>
+                <h2>Built for Execution.</h2>
+            </div>
+            <div class="card" style="max-width: 500px;">
+                <h3>Junayed Rafid</h3>
+                <p style="color: var(--accent); font-weight: 500; margin-bottom: 1rem;">Founder & Lead Engineer</p>
+                <p>EEE Student at BRAC University. Lead architect of the SAR Rover hardware design, ML pipeline, and ROS 2 autonomous navigation stack.</p>
+                <a href="https://www.linkedin.com/in/junayed-rafid-458885333/" target="_blank" style="display:inline-block; margin-top: 1rem; font-weight: 500;">View LinkedIn &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Aorist Technologies. Prepared for Entrepreneurship World Cup (EWC) 2026 - BRAC University.</p>
+        </div>
+    </footer>
+</body>
+</html>
