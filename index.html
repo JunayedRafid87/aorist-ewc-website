@@ -87,8 +87,8 @@
             </div>
             
             <div style="margin-top: 4rem;">
-                <h3>Interactive 3D Point Cloud (Hybrid SLAM)</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 1rem;">Drag to rotate, scroll to zoom. Generated autonomously by the SAR Rover.</p>
+                <h3>Interactive 3D Point Cloud (Approach 1 - LiDAR)</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">Drag to rotate, scroll to zoom. Generated autonomously via our push-broom LiDAR strategy.</p>
                 <div id="viewer3d" class="viewer-container"></div>
             </div>
         </div>
@@ -209,7 +209,7 @@
             controls.autoRotateSpeed = 1.0;
 
             const loader = new THREE.PLYLoader();
-            loader.load('https://raw.githubusercontent.com/JunayedRafid87/sar-rover/main/hybrid_map.ply', function (geometry) {
+            loader.load('https://raw.githubusercontent.com/JunayedRafid87/sar-rover/main/lidar_map.ply', function (geometry) {
                 geometry.computeVertexNormals();
                 const material = new THREE.PointsMaterial({ size: 0.05, vertexColors: true });
                 const points = new THREE.Points(geometry, material);
