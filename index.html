@@ -1,22 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aorist Technologies | Autonomous SAR Rovers</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <!-- Three.js for 3D Viewer -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/PLYLoader.js"></script>
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
-            <div class="logo">Aorist Technologies</div>
+            <div class="brand">
+                <img src="assets/logo.png" alt="Aorist Logo" class="logo-img">
+                <div class="logo-text">Aorist Technologies</div>
+            </div>
             <div class="nav-links">
                 <a href="#problem">Problem</a>
                 <a href="#solution">Solution</a>
                 <a href="#technology">Technology</a>
                 <a href="#market">Market</a>
                 <a href="#team">Team</a>
+                <button class="theme-toggle" id="themeToggle">Light Mode</button>
             </div>
         </div>
     </nav>
@@ -47,7 +55,7 @@
                     <ul style="list-style-position: inside; color: var(--text-secondary); line-height: 2;">
                         <li>Human responders cannot safely enter unstable structures.</li>
                         <li>Existing robotic solutions are too expensive for developing nations.</li>
-                        <li>Dense 3D mapping data (15-21 Mbps) fails over congested wireless ad-hoc networks.</li>
+                        <li>Dense 3D mapping data (15-21 Mbps) fails over congested ad-hoc networks.</li>
                         <li>Visual cameras fail in zero-visibility, smoke-filled environments.</li>
                     </ul>
                 </div>
@@ -66,11 +74,11 @@
             <div class="grid-3">
                 <div class="card">
                     <h3>Push-Broom 3D Mapping</h3>
-                    <p>Instead of transmitting 3D point clouds, the rover sends lightweight 2D LiDAR slices (85ms delay). A base-station algorithm constructs the full 3D map from odometry.</p>
+                    <p>Instead of transmitting 3D point clouds, the rover sends lightweight 2D LiDAR slices (85ms delay). A base-station algorithm constructs the full 3D map.</p>
                 </div>
                 <div class="card">
                     <h3>YOLOv11m Thermal AI</h3>
-                    <p>Custom-trained on the OpenThermalPose dataset with CLAHE augmentation, achieving 89.2% mAP@50 to detect partially occluded survivors in zero-light.</p>
+                    <p>Custom-trained on the OpenThermalPose dataset with CLAHE augmentation, achieving 89.2% mAP@50 to detect partially occluded survivors.</p>
                 </div>
                 <div class="card">
                     <h3>Extreme Cost Efficiency</h3>
@@ -78,33 +86,43 @@
                 </div>
             </div>
             
-            <div class="image-block" style="margin-top: 4rem;">
-                 <video autoplay loop muted playsinline src="https://raw.githubusercontent.com/JunayedRafid87/sar-rover/main/omnet_ap1.mp4"></video>
+            <div style="margin-top: 4rem;">
+                <h3>Interactive 3D Point Cloud (Hybrid SLAM)</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">Drag to rotate, scroll to zoom. Generated autonomously by the SAR Rover.</p>
+                <div id="viewer3d" class="viewer-container"></div>
             </div>
         </div>
     </section>
 
     <section id="technology">
         <div class="container">
-            <div class="grid-2">
+            <div class="section-header">
+                <div class="section-tag">Validation</div>
+                <h2>Webots Simulation Framework.</h2>
+                <p style="max-width: 600px; color: var(--text-secondary);">Our hardware and software stack was rigorously tested using Webots and OMNeT++. Below are the validated real-world robotic simulations for our sensor arrays.</p>
+            </div>
+            
+            <div class="grid-3">
                 <div>
-                    <div class="section-tag">Technology & Metrics</div>
-                    <h2>Validated Algorithmic IP.</h2>
-                    <p>Our architecture has been rigorously tested using Webots simulation and OMNeT++ wireless network modeling. This isn't theoretical; it's proven.</p>
-                    
-                    <div style="margin-top: 2rem;">
-                        <div class="metric-large">99.96%</div>
-                        <p style="color: var(--text-secondary);">Packet Delivery Rate (PDR) for safety-critical streams over 802.11 ad-hoc mesh.</p>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/VERsw_9Qb1c?rel=0&mute=1" title="Approach 1 (LiDAR)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
-                    
-                    <div style="margin-top: 2rem;">
-                        <div class="metric-large">89.2%</div>
-                        <p style="color: var(--text-secondary);">mAP@50 accuracy for our YOLOv11m thermal survivor detection model.</p>
-                    </div>
+                    <h4 style="margin-bottom: 0.5rem;">Approach 1: LiDAR Only</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Push-broom mapping. Optimal network performance (85ms delay) but lacks color context.</p>
                 </div>
-                <div class="image-block" style="background-color: var(--bg-tertiary); padding: 2rem; display:flex; align-items:center; justify-content:center;">
-                    <!-- Re-using an image from the repo -->
-                    <img src="https://raw.githubusercontent.com/JunayedRafid87/sar-rover/main/omnet_ap1.png" alt="OMNeT++ Network Simulation Results" style="border-radius: 4px;">
+                <div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/Xek0ZBy9YlE?rel=0&mute=1" title="Approach 2 (RGB-D)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <h4 style="margin-bottom: 0.5rem;">Approach 2: RGB-D Camera</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">High-resolution depth and color, but chokes bandwidth (max 30s delay in mesh network).</p>
+                </div>
+                <div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/1YkG3gz0NQA?rel=0&mute=1" title="Approach 3 (Hybrid)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <h4 style="margin-bottom: 0.5rem;">Approach 3: RTAB-Map Fusion</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Combines LiDAR geometry with RGB textures for the ultimate 3D map.</p>
                 </div>
             </div>
         </div>
@@ -153,5 +171,78 @@
             <p>&copy; 2026 Aorist Technologies. Prepared for Entrepreneurship World Cup (EWC) 2026 - BRAC University.</p>
         </div>
     </footer>
+
+    <script>
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+            
+            // Re-render 3D scene background
+            if (window.scene) {
+                window.scene.background = new THREE.Color(newTheme === 'dark' ? 0x000000 : 0xe5e7eb);
+            }
+        });
+
+        // 3D Viewer Logic
+        function init3DViewer() {
+            const container = document.getElementById('viewer3d');
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x000000);
+            window.scene = scene; // for theme toggling
+
+            const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera.position.set(0, 5, -8);
+            camera.lookAt(0, 0, 0);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 1.0;
+
+            const loader = new THREE.PLYLoader();
+            loader.load('https://raw.githubusercontent.com/JunayedRafid87/sar-rover/main/hybrid_map.ply', function (geometry) {
+                geometry.computeVertexNormals();
+                const material = new THREE.PointsMaterial({ size: 0.05, vertexColors: true });
+                const points = new THREE.Points(geometry, material);
+                
+                // Center geometry
+                geometry.computeBoundingBox();
+                const center = new THREE.Vector3();
+                geometry.boundingBox.getCenter(center);
+                points.position.sub(center);
+                
+                // Fix orientation for Webots output
+                points.rotation.x = -Math.PI / 2;
+                
+                scene.add(points);
+            });
+
+            window.addEventListener('resize', onWindowResize, false);
+            function onWindowResize() {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // Initialize 3D viewer when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init3DViewer);
+    </script>
 </body>
 </html>
