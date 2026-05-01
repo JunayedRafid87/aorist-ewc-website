@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aorist Technologies | Autonomous SAR Rovers</title>
+    <title>Aorist Technologies — Autonomous SAR Rovers</title>
+    <meta name="description" content="Low-cost autonomous search and rescue rovers with AI-powered thermal survivor detection and 3D mapping for disaster zones.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <!-- Three.js for 3D Viewer -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/PLYLoader.js"></script>
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
             <div class="brand">
-                <img src="assets/logo.png" alt="Aorist Logo" class="logo-img">
+                <img src="assets/logo.png" alt="Aorist" class="logo-img">
                 <div class="logo-text">Aorist Technologies</div>
             </div>
             <div class="nav-links">
@@ -24,22 +22,29 @@
                 <a href="#technology">Technology</a>
                 <a href="#market">Market</a>
                 <a href="#team">Team</a>
-                <button class="theme-toggle" id="themeToggle">Light Mode</button>
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Light Mode</button>
             </div>
         </div>
     </nav>
 
+    <!-- ─── HERO ─── -->
     <header class="hero" id="home">
         <div class="container">
-            <div class="hero-content">
-                <div class="section-tag">Search & Rescue Robotics</div>
-                <h1>Autonomous Mapping & Survivor Detection.</h1>
-                <p>Aorist Technologies builds low-cost, AI-powered rovers for disaster zones. We solve the bandwidth and cost barriers of tactical robotics for the developing world.</p>
-                <a href="#solution" class="btn">Explore the Solution</a>
+            <div class="hero-inner">
+                <div class="hero-content">
+                    <div class="section-tag">Search & Rescue Robotics</div>
+                    <h1>Autonomous Mapping & Survivor Detection.</h1>
+                    <p>Aorist Technologies builds low-cost, AI-powered rovers for disaster zones. We solve the bandwidth and cost barriers of tactical robotics for the developing world.</p>
+                    <a href="#solution" class="btn">Explore the Solution</a>
+                </div>
+                <div class="hero-logo">
+                    <img src="assets/logo.png" alt="Aorist Technologies">
+                </div>
             </div>
         </div>
     </header>
 
+    <!-- ─── PROBLEM ─── -->
     <section id="problem">
         <div class="container">
             <div class="grid-2">
@@ -48,14 +53,14 @@
                     <h2>The 72-Hour Window.</h2>
                     <p>When a structure collapses, responders have a 72-hour window to rescue survivors. Today, agencies in Bangladesh and South Asia rely on manual searching — a slow, dangerous process.</p>
                     <br>
-                    <p>Current tactical UGVs (Unmanned Ground Vehicles) are prohibitively expensive ($70K-$200K) and rely on heavy 3D sensors that choke constrained wireless networks in disaster zones. They are built for high-bandwidth environments, not reality.</p>
+                    <p>Current tactical UGVs are prohibitively expensive ($70K–$200K) and rely on heavy 3D sensors that choke constrained wireless networks in disaster zones.</p>
                 </div>
                 <div class="card">
                     <h3>The Limitations We Face</h3>
-                    <ul style="list-style-position: inside; color: var(--text-secondary); line-height: 2;">
+                    <ul style="list-style-position: inside; color: var(--text-secondary); line-height: 2.2;">
                         <li>Human responders cannot safely enter unstable structures.</li>
                         <li>Existing robotic solutions are too expensive for developing nations.</li>
-                        <li>Dense 3D mapping data (15-21 Mbps) fails over congested ad-hoc networks.</li>
+                        <li>Dense 3D mapping data (15–21 Mbps) fails over congested ad-hoc networks.</li>
                         <li>Visual cameras fail in zero-visibility, smoke-filled environments.</li>
                     </ul>
                 </div>
@@ -63,186 +68,154 @@
         </div>
     </section>
 
+    <!-- ─── SOLUTION ─── -->
     <section id="solution">
         <div class="container">
-            <div class="section-header">
-                <div class="section-tag">Our Solution</div>
-                <h2>Computational Offloading & Edge AI.</h2>
-                <p style="max-width: 600px; color: var(--text-secondary);">We engineered an autonomous rover that maps in 3D using only lightweight 2D data, while detecting survivors via thermally-trained AI.</p>
-            </div>
+            <div class="section-tag">Our Solution</div>
+            <h2>Computational Offloading & Edge AI.</h2>
+            <p style="max-width: 600px; color: var(--text-secondary); margin-bottom: 3rem;">We engineered an autonomous rover that maps in 3D using only lightweight 2D data, while detecting survivors via thermally-trained AI.</p>
 
-            <div class="grid-3">
+            <div class="grid-3" style="margin-bottom: 4rem;">
                 <div class="card">
                     <h3>Push-Broom 3D Mapping</h3>
-                    <p>Instead of transmitting 3D point clouds, the rover sends lightweight 2D LiDAR slices (85ms delay). A base-station algorithm constructs the full 3D map.</p>
+                    <p>The rover sends lightweight 2D LiDAR slices (85ms delay). A base-station algorithm reconstructs the full 3D map from odometry.</p>
                 </div>
                 <div class="card">
                     <h3>YOLOv11m Thermal AI</h3>
-                    <p>Custom-trained on the OpenThermalPose dataset with CLAHE augmentation, achieving 89.2% mAP@50 to detect partially occluded survivors.</p>
+                    <p>Custom-trained on OpenThermalPose with CLAHE augmentation, achieving 89.2% mAP@50 to detect partially occluded survivors.</p>
                 </div>
                 <div class="card">
-                    <h3>Extreme Cost Efficiency</h3>
-                    <p>Built with a dual-ESP microcontroller architecture and D-Robotics RDK X5 compute module. Total hardware BOM is under $500 USD.</p>
+                    <h3>Under $500 Hardware</h3>
+                    <p>Dual-ESP microcontroller architecture with D-Robotics RDK X5 compute module. A fraction of the cost of foreign alternatives.</p>
                 </div>
             </div>
-            
-            <div style="margin-top: 4rem;">
-                <h3>Interactive 3D Point Cloud (Approach 1 - LiDAR)</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 1rem;">Drag to rotate, scroll to zoom. Generated autonomously via our push-broom LiDAR strategy.</p>
-                <div id="viewer3d" class="viewer-container"></div>
+
+            <!-- ─── 3D VIEWER (FYDP-style) ─── -->
+            <div class="viewer-section">
+                <h3 style="text-align:center; margin-bottom: 0.5rem;">Approach 1 — LiDAR 3D Point Cloud</h3>
+                <p style="text-align:center; color: var(--text-secondary); margin-bottom: 1.5rem;">Generated autonomously via push-broom mapping in Webots simulation.</p>
+
+                <div class="render-toggle">
+                    <div class="render-toggle-inner">
+                        <button id="btn-3d" class="render-btn" onclick="switchRenderMode('3d')" style="background: rgba(34,197,94,0.2); color: var(--text-primary);">🕸️ Interactive 3D Model</button>
+                        <button id="btn-video" class="render-btn" onclick="switchRenderMode('video')">🎬 Watch Live Mapping</button>
+                    </div>
+                </div>
+
+                <div class="viewer-container">
+                    <iframe id="viewer-video" src="" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; border:none; z-index:15;" allowfullscreen allow="autoplay"></iframe>
+                    <canvas id="viewer3d" class="viewer-canvas"></canvas>
+                    <div class="viewer-loader" id="viewer-loader">
+                        <div class="loader-cube">
+                            <div class="loader-face front"></div><div class="loader-face back"></div>
+                            <div class="loader-face right"></div><div class="loader-face left"></div>
+                            <div class="loader-face top"></div><div class="loader-face bottom"></div>
+                        </div>
+                        <div class="loader-text">Loading Point Cloud...</div>
+                    </div>
+                    <div class="viewer-overlay">
+                        <div class="viewer-tag"><span class="dot" style="background:#22c55e"></span> Approach 1 — LiDAR Only</div>
+                        <div class="viewer-tag">📊 45,356 points</div>
+                    </div>
+                    <div class="viewer-hint">🖱️ Drag to rotate · Scroll to zoom · Right-click to pan</div>
+                    <div class="viewer-controls">
+                        <button class="viewer-btn" onclick="resetCamera()">⟲ Reset</button>
+                        <button class="viewer-btn" onclick="toggleAutoRotate()">🔄 Auto Rotate</button>
+                    </div>
+                </div>
+
+                <div class="approach-info">
+                    <div class="info-card"><div class="info-label">Sensor</div><div class="info-value" style="font-size:1.1rem;">RPLiDAR C1</div></div>
+                    <div class="info-card"><div class="info-label">Points</div><div class="info-value">45,356</div><div class="info-sub">360° coverage</div></div>
+                    <div class="info-card"><div class="info-label">Power</div><div class="info-value">42.5W</div><div class="info-sub">37 min runtime</div></div>
+                    <div class="info-card"><div class="info-label">Data Rate</div><div class="info-value">6.9 MB/s</div><div class="info-sub">Lightweight telemetry</div></div>
+                    <div class="info-card"><div class="info-label">SLAM</div><div class="info-value" style="font-size:1.1rem;">ICP (slam_toolbox)</div><div class="info-sub">Push-broom 3D stacking</div></div>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- ─── TECHNOLOGY METRICS ─── -->
     <section id="technology">
         <div class="container">
-            <div class="section-header">
-                <div class="section-tag">Validation</div>
-                <h2>Webots Simulation Framework.</h2>
-                <p style="max-width: 600px; color: var(--text-secondary);">Our hardware and software stack was rigorously tested using Webots and OMNeT++. Below are the validated real-world robotic simulations for our sensor arrays.</p>
-            </div>
-            
-            <div class="grid-3">
+            <div class="grid-2">
                 <div>
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/VERsw_9Qb1c?rel=0&mute=1" title="Approach 1 (LiDAR)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="section-tag">Validation</div>
+                    <h2>Validated Algorithmic IP.</h2>
+                    <p>Rigorously tested using Webots simulation and OMNeT++ wireless network modeling. Every number is a measured result.</p>
+                    <div style="margin-top: 2rem;">
+                        <div class="metric-large">99.96%</div>
+                        <p style="color: var(--text-secondary);">Packet Delivery Rate for safety-critical streams over 802.11 ad-hoc mesh.</p>
                     </div>
-                    <h4 style="margin-bottom: 0.5rem;">Approach 1: LiDAR Only</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Push-broom mapping. Optimal network performance (85ms delay) but lacks color context.</p>
+                    <div style="margin-top: 2rem;">
+                        <div class="metric-large">89.2%</div>
+                        <p style="color: var(--text-secondary);">mAP@50 — YOLOv11m thermal survivor detection accuracy.</p>
+                    </div>
+                    <div style="margin-top: 2rem;">
+                        <div class="metric-large">85ms</div>
+                        <p style="color: var(--text-secondary);">Mean end-to-end delay vs. 30,000ms for competing RGB-D approaches.</p>
+                    </div>
                 </div>
-                <div>
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/Xek0ZBy9YlE?rel=0&mute=1" title="Approach 2 (RGB-D)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div style="display:flex; flex-direction:column; gap: 1rem;">
+                    <div class="card" style="flex:1; padding:0; overflow:hidden;">
+                        <img src="https://raw.githubusercontent.com/JunayedRafid87/sar-rover/main/omnet_ap1.png" alt="OMNeT++ Results" style="width:100%; height:auto; display:block;">
                     </div>
-                    <h4 style="margin-bottom: 0.5rem;">Approach 2: RGB-D Camera</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary);">High-resolution depth and color, but chokes bandwidth (max 30s delay in mesh network).</p>
-                </div>
-                <div>
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/1YkG3gz0NQA?rel=0&mute=1" title="Approach 3 (Hybrid)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <h4 style="margin-bottom: 0.5rem;">Approach 3: RTAB-Map Fusion</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Combines LiDAR geometry with RGB textures for the ultimate 3D map.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ─── MARKET ─── -->
     <section id="market">
         <div class="container">
-            <div class="section-header">
-                <div class="section-tag">Business Model</div>
-                <h2>B2G Procurement & SaaS.</h2>
-            </div>
-            <div class="grid-3">
+            <div class="section-tag">Business Model</div>
+            <h2>B2G Procurement & SaaS.</h2>
+            <div class="grid-3" style="margin-top: 2rem;">
                 <div class="card">
                     <h3>1. Government Contracts</h3>
-                    <p>Direct sales to Bangladesh FSCD and Army Corps of Engineers. Targeting a $1,500-$3,000 unit price with a healthy margin on a $500 COGS.</p>
+                    <p>Direct sales to Bangladesh FSCD and Army Corps of Engineers. $1,500–$3,000 unit price on a $500 COGS.</p>
                 </div>
                 <div class="card">
                     <h3>2. Maintenance (AMS)</h3>
-                    <p>Post-deployment service agreements covering firmware updates, calibration, and battery replacements (estimated 10-15% of unit cost annually).</p>
+                    <p>Service agreements for firmware updates, calibration, and battery cycles. 10–15% of unit cost annually.</p>
                 </div>
                 <div class="card">
-                    <h3>3. Data Dashboard (SaaS)</h3>
-                    <p>Long-term cloud-based mission dashboard subscription for incident commanders to review 3D maps and AI logs in real-time.</p>
+                    <h3>3. Data Dashboard</h3>
+                    <p>Cloud-based mission dashboard subscription for 3D maps and AI detection logs.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ─── TEAM ─── -->
     <section id="team">
         <div class="container">
-            <div class="section-header">
-                <div class="section-tag">Team</div>
-                <h2>Built for Execution.</h2>
-            </div>
+            <div class="section-tag">Team</div>
+            <h2>Built for Execution.</h2>
             <div class="card" style="max-width: 500px;">
                 <h3>Junayed Rafid</h3>
                 <p style="color: var(--accent); font-weight: 500; margin-bottom: 1rem;">Founder & Lead Engineer</p>
-                <p>EEE Student at BRAC University. Lead architect of the SAR Rover hardware design, ML pipeline, and ROS 2 autonomous navigation stack.</p>
-                <a href="https://www.linkedin.com/in/junayed-rafid-458885333/" target="_blank" style="display:inline-block; margin-top: 1rem; font-weight: 500;">View LinkedIn &rarr;</a>
+                <p>EEE Student at BRAC University. Lead architect of the SAR Rover hardware, ML pipeline, and ROS 2 autonomous navigation stack.</p>
+                <a href="https://www.linkedin.com/in/junayed-rafid-458885333/" target="_blank" style="display:inline-block; margin-top:1rem; font-weight:500;">View LinkedIn &rarr;</a>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Aorist Technologies. Prepared for Entrepreneurship World Cup (EWC) 2026 - BRAC University.</p>
+            <p>&copy; 2026 Aorist Technologies. Prepared for Entrepreneurship World Cup (EWC) 2026 — BRAC University.</p>
         </div>
     </footer>
 
+    <script src="viewer.js"></script>
     <script>
-        // Theme Toggle Logic
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            themeToggle.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
-            
-            // Re-render 3D scene background
-            if (window.scene) {
-                window.scene.background = new THREE.Color(newTheme === 'dark' ? 0x000000 : 0xe5e7eb);
-            }
-        });
-
-        // 3D Viewer Logic
-        function init3DViewer() {
-            const container = document.getElementById('viewer3d');
-            const scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x000000);
-            window.scene = scene; // for theme toggling
-
-            const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 100);
-            camera.position.set(0, 5, -8);
-            camera.lookAt(0, 0, 0);
-
-            const renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            container.appendChild(renderer.domElement);
-
-            const controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.05;
-            controls.autoRotate = true;
-            controls.autoRotateSpeed = 1.0;
-
-            const loader = new THREE.PLYLoader();
-            loader.load('https://raw.githubusercontent.com/JunayedRafid87/sar-rover/main/lidar_map.ply', function (geometry) {
-                geometry.computeVertexNormals();
-                const material = new THREE.PointsMaterial({ size: 0.05, vertexColors: true });
-                const points = new THREE.Points(geometry, material);
-                
-                // Center geometry
-                geometry.computeBoundingBox();
-                const center = new THREE.Vector3();
-                geometry.boundingBox.getCenter(center);
-                points.position.sub(center);
-                
-                // Fix orientation for Webots output
-                points.rotation.x = -Math.PI / 2;
-                
-                scene.add(points);
-            });
-
-            window.addEventListener('resize', onWindowResize, false);
-            function onWindowResize() {
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
-            }
-
-            function animate() {
-                requestAnimationFrame(animate);
-                controls.update();
-                renderer.render(scene, camera);
-            }
-            animate();
+        function toggleTheme() {
+            const t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', t);
+            document.getElementById('themeToggle').textContent = t === 'dark' ? 'Light Mode' : 'Dark Mode';
+            if (window.threeRenderer) window.threeRenderer.setClearColor(t === 'dark' ? 0x0d1117 : 0xe5e7eb);
+            if (window.scene && window.scene.fog) window.scene.fog.color.set(t === 'dark' ? 0x0d1117 : 0xe5e7eb);
         }
-
-        // Initialize 3D viewer when DOM is loaded
-        document.addEventListener('DOMContentLoaded', init3DViewer);
     </script>
 </body>
 </html>
