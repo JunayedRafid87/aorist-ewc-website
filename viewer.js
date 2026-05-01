@@ -13,12 +13,12 @@ function initViewer() {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x0d1117);
+    renderer.setClearColor(0x1a1f2e);
     window.threeRenderer = renderer;
 
     scene = new THREE.Scene();
     window.scene = scene;
-    scene.fog = new THREE.Fog(0x0d1117, 15, 30);
+    scene.fog = new THREE.Fog(0x1a1f2e, 15, 30);
 
     camera = new THREE.PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
     updateCamera();
