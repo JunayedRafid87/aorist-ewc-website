@@ -13,17 +13,17 @@ function initViewer() {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x1a1f2e);
+    renderer.setClearColor(0x080d1a);
     window.threeRenderer = renderer;
 
     scene = new THREE.Scene();
     window.scene = scene;
-    scene.fog = new THREE.Fog(0x1a1f2e, 15, 30);
+    scene.fog = new THREE.Fog(0x080d1a, 15, 30);
 
     camera = new THREE.PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
     updateCamera();
 
-    const grid = new THREE.GridHelper(20, 40, 0x1a2332, 0x111827);
+    const grid = new THREE.GridHelper(20, 40, 0x141c30, 0x0e1424);
     grid.position.y = -0.5;
     scene.add(grid);
     scene.add(new THREE.AmbientLight(0xffffff, 0.5));
@@ -155,7 +155,7 @@ function parsePLYText(text) {
         }
     }
     cx /= count; cy /= count; cz /= count;
-    const fallback = new THREE.Color('#22c55e');
+    const fallback = new THREE.Color('#4af0b4');
     for (let i = 0; i < vertexCount; i++) {
         positions[i * 3] = rawX[i] - cx;
         positions[i * 3 + 1] = rawZ[i] - cz;
@@ -204,17 +204,17 @@ function switchRenderMode(mode) {
     const hint = document.querySelector('.viewer-hint');
     const videoFrame = document.getElementById('viewer-video');
 
-    [btn3d, btnVideo].forEach(b => { b.style.background = 'transparent'; b.style.color = 'var(--text-secondary)'; });
+    [btn3d, btnVideo].forEach(b => { b.style.background = 'transparent'; b.style.color = 'var(--text-2)'; });
 
     if (mode === '3d') {
-        btn3d.style.background = 'rgba(34, 197, 94, 0.2)'; btn3d.style.color = 'var(--text-primary)';
+        btn3d.style.background = 'rgba(74, 240, 180, 0.2)'; btn3d.style.color = 'var(--text)';
         canvas.style.opacity = '1';
         if (overlay) overlay.style.display = 'flex';
         if (controls) controls.style.display = 'flex';
         if (hint) hint.style.display = 'block';
         videoFrame.style.display = 'none'; videoFrame.src = '';
     } else {
-        btnVideo.style.background = 'rgba(34, 197, 94, 0.2)'; btnVideo.style.color = 'var(--text-primary)';
+        btnVideo.style.background = 'rgba(74, 240, 180, 0.2)'; btnVideo.style.color = 'var(--text)';
         canvas.style.opacity = '0';
         if (overlay) overlay.style.display = 'none';
         if (controls) controls.style.display = 'none';
