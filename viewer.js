@@ -131,22 +131,29 @@ function updateCamera() {
 }
 
 function parsePLYText(text) {
-    const lines = text.split('\n');
+    const allLines = text.split('\n');
     let headerEnd = 0, vertexCount = 0;
-    for (let i = 0; i < lines.length; i++) {
-        if (lines[i].startsWith('element vertex')) vertexCount = parseInt(lines[i].split(' ')[2]);
-        if (lines[i].trim() === 'end_header') { headerEnd = i + 1; break; }
+    for (let i = 0; i < allLines.length; i++) {
+        if (allLines[i].startsWith('element vertex')) vertexCount = parseInt(allLines[i].split(' ')[2]);
+        if (allLines[i].trim() === 'end_header') { headerEnd = i + 1; break; }
     }
-    const positions = new Float32Array(vertexCount * 3);
-    const colors = new Float32Array(vertexCount * 3);
+    // Filter out blank lines from the data section
+    const dataLines = [];
+    for (let i = headerEnd; i < allLines.length; i++) {
+        const trimmed = allLines[i].trim();
+        if (trimmed.length > 0) dataLines.push(trimmed);
+    }
+    const actualCount = Math.min(vertexCount, dataLines.length);
+    const positions = new Float32Array(actualCount * 3);
+    const colors = new Float32Array(actualCount * 3);
     let cx = 0, cy = 0, cz = 0, count = 0;
-    const rawX = new Float32Array(vertexCount), rawY = new Float32Array(vertexCount), rawZ = new Float32Array(vertexCount);
-    const rawR = new Uint8Array(vertexCount), rawG = new Uint8Array(vertexCount), rawB = new Uint8Array(vertexCount);
+    const rawX = new Float32Array(actualCount), rawY = new Float32Array(actualCount), rawZ = new Float32Array(actualCount);
+    const rawR = new Uint8Array(actualCount), rawG = new Uint8Array(actualCount), rawB = new Uint8Array(actualCount);
     let hasColor = false;
 
-    for (let i = 0; i < vertexCount; i++) {
-        const parts = lines[headerEnd + i]?.trim().split(/\s+/);
-        if (!parts || parts.length < 3) continue;
+    for (let i = 0; i < actualCount; i++) {
+        const parts = dataLines[i].split(/\s+/);
+        if (parts.length < 3) continue;
         rawX[i] = parseFloat(parts[0]); rawY[i] = parseFloat(parts[1]); rawZ[i] = parseFloat(parts[2]);
         cx += rawX[i]; cy += rawY[i]; cz += rawZ[i]; count++;
         if (parts.length >= 6) {
@@ -154,9 +161,10 @@ function parsePLYText(text) {
             if (rawR[i] || rawG[i] || rawB[i]) hasColor = true;
         }
     }
+    if (count === 0) count = 1; // Prevent division by zero
     cx /= count; cy /= count; cz /= count;
     const fallback = new THREE.Color('#4af0b4');
-    for (let i = 0; i < vertexCount; i++) {
+    for (let i = 0; i < actualCount; i++) {
         positions[i * 3] = rawX[i] - cx;
         positions[i * 3 + 1] = rawZ[i] - cz;
         positions[i * 3 + 2] = -(rawY[i] - cy);
@@ -174,12 +182,19 @@ function parsePLYText(text) {
 
 function loadPLY() {
     const loader = document.getElementById('viewer-loader');
-    if (loader) loader.classList.remove('hidden');
-    fetch(PLY_URL).then(r => r.text()).then(text => {
+    if (loader) loader.style.display = 'flex';
+    fetch(PLY_URL).then(r => {
+        if (!r.ok) throw new Error('Failed to fetch PLY: ' + r.status);
+        return r.text();
+    }).then(text => {
         if (currentCloud) scene.remove(currentCloud);
         currentCloud = parsePLYText(text);
         scene.add(currentCloud);
-        if (loader) loader.classList.add('hidden');
+        if (loader) loader.style.display = 'none';
+    }).catch(err => {
+        console.error('PLY load error:', err);
+        const lt = document.querySelector('.loader-text');
+        if (lt) lt.textContent = 'Failed to load point cloud';
     });
 }
 
