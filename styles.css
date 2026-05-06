@@ -400,6 +400,8 @@ h2 { font-family: var(--font-head); font-size: clamp(2rem,4vw,3rem); font-weight
 .reveal-delay.visible { opacity: 1; transform: none; }
 
 /* ── Responsive ── */
+
+/* ── Tablet (≤ 900px) ── */
 @media (max-width: 900px) {
   .hero { flex-direction: column; align-items: flex-start; padding-top: 6rem; min-height: auto; gap: 3rem; }
   .hero-visual { width: 260px; height: 260px; align-self: center; }
@@ -411,15 +413,155 @@ h2 { font-family: var(--font-head); font-size: clamp(2rem,4vw,3rem); font-weight
   .team-grid { grid-template-columns: 1fr 1fr; }
   .nav-links { display: none; }
   .burger { display: flex; }
+  .viewer-container { height: 350px; }
+  .section { padding: 5rem 1.5rem; }
 }
+
+/* ── Phone (≤ 600px) ── */
 @media (max-width: 600px) {
-  .three-col { grid-template-columns: 1fr; }
-  .team-grid { grid-template-columns: 1fr; }
-  .stats-bar { gap: 1rem; }
+  /* ── Global spacing ── */
+  html { font-size: 15px; }
+  .section { padding: 3.5rem 1.15rem; }
+  .section-header { margin-bottom: 2.5rem; }
+  .section-sub { font-size: 0.92rem; }
+
+  /* ── Navbar ── */
+  .navbar { padding: 0 1rem; }
+  .nav-inner { height: 56px; gap: 0.75rem; }
+  .logo-img { height: 26px; }
+  .brand-name { font-size: 1rem; }
+  .theme-btn { width: 34px; height: 34px; font-size: 0.9rem; }
+  .burger { padding: 8px; }
+  .burger span { width: 20px; }
+  .mobile-menu { backdrop-filter: blur(16px); background: rgba(14,20,36,0.95); }
+  .mobile-menu a {
+    padding: 14px 1.25rem; font-size: 1rem; font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  [data-theme="light"] .mobile-menu { background: rgba(240,237,232,0.95); }
+
+  /* ── Hero ── */
+  .hero { padding: 5rem 1.15rem 2.5rem; gap: 2rem; text-align: center; align-items: center; }
+  .hero-content { max-width: 100%; display: flex; flex-direction: column; align-items: center; }
+  .badge { font-size: 0.7rem; padding: 5px 12px; margin-bottom: 1.25rem; }
+  h1 { font-size: clamp(1.85rem, 8vw, 2.6rem); margin-bottom: 1rem; }
+  .hero-sub { font-size: 0.92rem; margin-bottom: 2rem; text-align: center; max-width: 100%; }
+  .hero-ctas { flex-direction: column; width: 100%; gap: 10px; }
+  .btn-primary, .btn-ghost { width: 100%; text-align: center; padding: 14px 20px; font-size: 0.95rem; }
+  .hero-visual { width: 200px; height: 200px; }
+  .hero-logo-img { width: 90px; }
+  .ring-3 { width: 200px; height: 200px; }
+  .ring-2 { width: 160px; height: 160px; }
+  .ring-1 { width: 120px; height: 120px; }
+  .scroll-hint { display: none; }
+
+  /* ── Stats Bar ── */
+  .stats-bar {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    padding: 0;
+  }
   .stat-div { display: none; }
-  .stat-item { padding: 0.75rem 1rem; }
+  .stat-item {
+    padding: 1rem 0.75rem; text-align: center;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:nth-child(2n+1):last-child { grid-column: 1 / -1; border-right: none; }
+  .stat-item:nth-last-child(-n+2) { border-bottom: none; }
+  .stat-item:nth-child(2n) { border-right: none; }
+  .stat-num { font-size: 1.5rem; }
+  .stat-label { font-size: 0.65rem; letter-spacing: 0.04em; }
+
+  /* ── Problem Section ── */
+  .col-text .lead { font-size: 1rem; }
+  .problem-card { padding: 1.5rem; }
+  .problem-card h3 { margin-bottom: 1rem; }
+  .barrier-list li { font-size: 0.85rem; gap: 0.75rem; }
+
+  /* ── Solution Cards ── */
+  .three-col { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 2.5rem; }
+  .feat-card { padding: 1.5rem; }
+  .feat-card h3 { font-size: 0.95rem; }
+
+  /* ── 3D Viewer ── */
+  .viewer-wrap { border-radius: var(--r); }
+  .viewer-header { padding: 1.25rem 1rem 1rem; flex-direction: column; gap: 0.75rem; }
+  .viewer-header h3 { font-size: 0.9rem; }
+  .viewer-header p { font-size: 0.75rem; }
+  .viewer-toggle-group { align-self: flex-start; }
+  .viewer-container { height: 260px; }
+  .viewer-overlay { top: 0.5rem; left: 0.5rem; }
+  .viewer-tag { font-size: 0.65rem; padding: 3px 8px; }
+  .viewer-hint { font-size: 0.62rem; padding: 3px 10px; bottom: 0.6rem; white-space: normal; text-align: center; max-width: 90%; }
+  .viewer-controls { bottom: 0.6rem; right: 0.5rem; gap: 4px; }
+  .viewer-btn { padding: 4px 10px; font-size: 0.68rem; }
   .specs-row { flex-direction: column; }
-  .spec { border-right: none; border-bottom: 1px solid var(--border); }
-  .footer-inner { flex-direction: column; align-items: flex-start; }
-  .footer-copy { text-align: left; }
+  .spec { border-right: none; border-bottom: 1px solid var(--border); padding: 0.75rem 1rem; }
+  .spec:last-child { border-bottom: none; }
+  .spec-label { font-size: 0.65rem; }
+  .spec-val { font-size: 0.85rem; }
+
+  /* ── Technology / Metrics ── */
+  .metrics-col { gap: 2rem; }
+  .metric-val { font-size: 1.2rem; }
+  .metric-label { font-size: 0.8rem; }
+  .metric-desc { font-size: 0.75rem; }
+  .video-block { border-radius: var(--r); }
+  .video-caption { font-size: 0.7rem; padding: 0.5rem 0.75rem 0.75rem; }
+
+  /* ── Business Cards ── */
+  .biz-card { padding: 1.5rem; }
+  .biz-num { font-size: 2rem; }
+  .biz-card h3 { font-size: 0.95rem; }
+  .biz-card p { font-size: 0.82rem; }
+
+  /* ── Team ── */
+  .team-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .team-card { padding: 1.25rem; gap: 1rem; }
+  .team-avatar { width: 44px; height: 44px; font-size: 0.85rem; }
+  .team-info h3 { font-size: 0.9rem; }
+  .team-role { font-size: 0.68rem; }
+  .team-bio { font-size: 0.8rem; }
+  .team-link { font-size: 0.78rem; padding: 4px 0; display: inline-block; }
+
+  /* ── Footer ── */
+  .footer { padding: 2rem 1.15rem; }
+  .footer-inner { flex-direction: column; align-items: center; text-align: center; gap: 1rem; }
+  .footer-copy { text-align: center; font-size: 0.72rem; }
+  .footer-nav { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .footer-nav a { font-size: 0.75rem; }
+}
+
+/* ── Small Phone (≤ 380px, e.g. iPhone SE) ── */
+@media (max-width: 380px) {
+  html { font-size: 14px; }
+  .section { padding: 3rem 1rem; }
+  .hero { padding: 4.5rem 1rem 2rem; }
+  h1 { font-size: 1.7rem; }
+  .hero-sub { font-size: 0.88rem; }
+  .hero-visual { width: 170px; height: 170px; }
+  .hero-logo-img { width: 75px; }
+  .ring-3 { width: 170px; height: 170px; }
+  .ring-2 { width: 135px; height: 135px; }
+  .ring-1 { width: 100px; height: 100px; }
+  .stat-num { font-size: 1.3rem; }
+  .viewer-container { height: 220px; }
+  .team-card { flex-direction: column; align-items: center; text-align: center; }
+  .team-role { text-align: center; }
+}
+
+/* ── Touch-friendly tap targets ── */
+@media (hover: none) and (pointer: coarse) {
+  .btn-primary, .btn-ghost, .view-toggle, .viewer-btn, .mobile-menu a, .footer-nav a {
+    min-height: 44px; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .burger { min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+  .theme-btn { min-width: 44px; min-height: 44px; }
+}
+
+/* ── Safe area for notched phones ── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .footer { padding-bottom: calc(2rem + env(safe-area-inset-bottom)); }
+  .navbar { padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right)); }
 }
