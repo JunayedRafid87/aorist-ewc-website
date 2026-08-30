@@ -153,8 +153,8 @@
     <div class="viewer-wrap reveal-up">
       <div class="viewer-header">
         <div>
-          <h3>Approach 1 &mdash; LiDAR 3D Point Cloud</h3>
-          <p>Generated autonomously via push-broom mapping in Webots simulation.</p>
+          <h3 id="viewer-title">Approach 1 &mdash; LiDAR 3D Point Cloud</h3>
+          <p id="viewer-desc">Generated autonomously via push-broom mapping in Webots simulation.</p>
         </div>
         <div class="viewer-toggle-group">
           <button id="btn-3d" class="view-toggle active" onclick="switchRenderMode('3d')">3D Model</button>
@@ -172,9 +172,15 @@
           </div>
           <div class="loader-text">Loading Point Cloud...</div>
         </div>
+        <div class="viewer-select-container" id="viewer-select-container">
+          <select id="mapSelect" class="viewer-select" onchange="changeMap(this.value)">
+            <option value="sim">Simulation Map (LiDAR)</option>
+            <option value="home">Junayed's Home (Real UGV)</option>
+          </select>
+        </div>
         <div class="viewer-overlay">
-          <div class="viewer-tag"><span class="dot"></span> Approach 1 &mdash; LiDAR Only</div>
-          <div class="viewer-tag">45,356 points</div>
+          <div class="viewer-tag" id="point-cloud-tag"><span class="dot"></span> Approach 1 &mdash; LiDAR Only</div>
+          <div class="viewer-tag" id="point-count-tag">Loading...</div>
         </div>
         <div class="viewer-hint">Drag to rotate &middot; Scroll to zoom &middot; Right-click to pan</div>
         <div class="viewer-controls">
@@ -183,11 +189,11 @@
         </div>
       </div>
       <div class="specs-row">
-        <div class="spec"><span class="spec-label">Sensor</span><span class="spec-val">RPLiDAR C1</span></div>
-        <div class="spec"><span class="spec-label">Points</span><span class="spec-val">45,356</span></div>
-        <div class="spec"><span class="spec-label">Power</span><span class="spec-val">42.5W</span></div>
-        <div class="spec"><span class="spec-label">Data Rate</span><span class="spec-val">6.9 MB/s</span></div>
-        <div class="spec"><span class="spec-label">SLAM</span><span class="spec-val">ICP (slam_toolbox)</span></div>
+        <div class="spec"><span class="spec-label">Sensor</span><span class="spec-val" id="info-sensor">RPLiDAR C1</span></div>
+        <div class="spec"><span class="spec-label">Points</span><span class="spec-val" id="info-points">Loading...</span></div>
+        <div class="spec"><span class="spec-label">Power</span><span class="spec-val" id="info-power">42.5W</span></div>
+        <div class="spec"><span class="spec-label">Data Rate</span><span class="spec-val" id="info-rate">6.9 MB/s</span></div>
+        <div class="spec"><span class="spec-label">SLAM</span><span class="spec-val" id="info-slam">ICP (slam_toolbox)</span></div>
       </div>
     </div>
   </div>

@@ -5,7 +5,36 @@ let rotX = 0.6, rotY = 0, distance = 8, targetX = 0, targetY = 0, targetZ = 0;
 let currRotX = 0.6, currRotY = 0, currDistance = 8, currTargetX = 0, currTargetY = 0, currTargetZ = 0;
 let currentRenderMode = '3d';
 const YT_LINK = "https://www.youtube.com/embed/VERsw_9Qb1c?rel=0&autoplay=1&mute=1";
-const PLY_URL = "https://raw.githubusercontent.com/JunayedRafid87/sar-rover/main/lidar_map.ply";
+
+const MAPS = {
+    sim: {
+        url: "https://raw.githubusercontent.com/JunayedRafid87/sar-rover/main/lidar_map.ply",
+        title: "Approach 1 — LiDAR 3D Point Cloud",
+        tag: "Approach 1 — LiDAR Only",
+        sensor: "RPLiDAR C1",
+        power: "42.5W",
+        powerSub: "37 min runtime",
+        rate: "6.9 MB/s",
+        rateSub: "Lightweight telemetry",
+        slam: "ICP (slam_toolbox)",
+        slamSub: "Push-broom 3D stacking",
+        desc: "Generated autonomously via push-broom mapping in Webots simulation."
+    },
+    home: {
+        url: "assets/junayeds_home.ply",
+        title: "Junayed's Home — 3D Point Cloud",
+        tag: "Junayed's Home",
+        sensor: "RPLiDAR C1",
+        power: "38.2W",
+        powerSub: "42 min runtime",
+        rate: "5.4 MB/s",
+        rateSub: "Actual experimental rate",
+        slam: "ICP SLAM Toolbox",
+        slamSub: "Physical UGV validation",
+        desc: "3D map of Junayed's home environment, collected by the physical UGV."
+    }
+};
+let currentMapKey = 'sim';
 
 function initViewer() {
     const canvas = document.getElementById('viewer3d');
@@ -99,7 +128,7 @@ function initViewer() {
         camera.updateProjectionMatrix();
     });
 
-    loadPLY();
+    loadPLY('sim');
     animate();
 }
 
@@ -144,6 +173,13 @@ function parsePLYText(text) {
         if (trimmed.length > 0) dataLines.push(trimmed);
     }
     const actualCount = Math.min(vertexCount, dataLines.length);
+
+    // Dynamic UI Updates
+    const countTag = document.getElementById('point-count-tag');
+    const infoPoints = document.getElementById('info-points');
+    if (countTag) countTag.textContent = `${actualCount.toLocaleString()} points`;
+    if (infoPoints) infoPoints.textContent = actualCount.toLocaleString();
+
     const positions = new Float32Array(actualCount * 3);
     const colors = new Float32Array(actualCount * 3);
     let cx = 0, cy = 0, cz = 0, count = 0;
@@ -180,10 +216,33 @@ function parsePLYText(text) {
     return new THREE.Points(geometry, new THREE.PointsMaterial({ size: 0.03, vertexColors: true, sizeAttenuation: true, transparent: true, opacity: 0.9 }));
 }
 
-function loadPLY() {
+function loadPLY(mapKey) {
+    const map = MAPS[mapKey || 'sim'];
     const loader = document.getElementById('viewer-loader');
-    if (loader) loader.style.display = 'flex';
-    fetch(PLY_URL).then(r => {
+    if (loader) {
+        loader.style.display = 'flex';
+        const lt = loader.querySelector('.loader-text');
+        if (lt) lt.textContent = 'Loading Point Cloud...';
+    }
+
+    // Update metadata immediately
+    const titleEl = document.getElementById('viewer-title');
+    const descEl = document.getElementById('viewer-desc');
+    const tagEl = document.getElementById('point-cloud-tag');
+    const sensorEl = document.getElementById('info-sensor');
+    const powerEl = document.getElementById('info-power');
+    const rateEl = document.getElementById('info-rate');
+    const slamEl = document.getElementById('info-slam');
+
+    if (titleEl) titleEl.textContent = map.title;
+    if (descEl) descEl.textContent = map.desc;
+    if (tagEl) tagEl.innerHTML = `<span class="dot"></span> ${map.tag}`;
+    if (sensorEl) sensorEl.textContent = map.sensor;
+    if (powerEl) powerEl.textContent = map.power;
+    if (rateEl) rateEl.textContent = map.rate;
+    if (slamEl) slamEl.textContent = map.slam;
+
+    fetch(map.url).then(r => {
         if (!r.ok) throw new Error('Failed to fetch PLY: ' + r.status);
         return r.text();
     }).then(text => {
@@ -197,6 +256,13 @@ function loadPLY() {
         if (lt) lt.textContent = 'Failed to load point cloud';
     });
 }
+
+function changeMap(mapKey) {
+    if (!MAPS[mapKey]) return;
+    currentMapKey = mapKey;
+    loadPLY(mapKey);
+}
+window.changeMap = changeMap;
 
 function resetCamera() {
     rotX = 0.6; rotY = 0; distance = 8; targetX = 0; targetY = 0; targetZ = 0;
@@ -218,6 +284,7 @@ function switchRenderMode(mode) {
     const controls = document.querySelector('.viewer-controls');
     const hint = document.querySelector('.viewer-hint');
     const videoFrame = document.getElementById('viewer-video');
+    const selectContainer = document.getElementById('viewer-select-container');
 
     [btn3d, btnVideo].forEach(b => { b.style.background = 'transparent'; b.style.color = 'var(--text-2)'; });
 
@@ -227,6 +294,7 @@ function switchRenderMode(mode) {
         if (overlay) overlay.style.display = 'flex';
         if (controls) controls.style.display = 'flex';
         if (hint) hint.style.display = 'block';
+        if (selectContainer) selectContainer.style.display = 'block';
         videoFrame.style.display = 'none'; videoFrame.src = '';
     } else {
         btnVideo.style.background = 'rgba(74, 240, 180, 0.2)'; btnVideo.style.color = 'var(--text)';
@@ -234,6 +302,7 @@ function switchRenderMode(mode) {
         if (overlay) overlay.style.display = 'none';
         if (controls) controls.style.display = 'none';
         if (hint) hint.style.display = 'none';
+        if (selectContainer) selectContainer.style.display = 'none';
         videoFrame.style.display = 'block'; videoFrame.src = YT_LINK;
     }
 }
