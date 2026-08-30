@@ -199,16 +199,38 @@ function parsePLYText(text) {
     }
     if (count === 0) count = 1; // Prevent division by zero
     cx /= count; cy /= count; cz /= count;
-    const fallback = new THREE.Color('#4af0b4');
+    // First pass: compute centered positions and determine height bounds (Y in Three.js)
+    let minY = Infinity, maxY = -Infinity;
     for (let i = 0; i < actualCount; i++) {
         positions[i * 3] = rawX[i] - cx;
         positions[i * 3 + 1] = rawZ[i] - cz;
         positions[i * 3 + 2] = -(rawY[i] - cy);
-        if (rawR[i] || rawG[i] || rawB[i]) {
-            colors[i * 3] = rawR[i] / 255; colors[i * 3 + 1] = rawG[i] / 255; colors[i * 3 + 2] = rawB[i] / 255;
+        
+        const yVal = positions[i * 3 + 1];
+        if (yVal < minY) minY = yVal;
+        if (yVal > maxY) maxY = yVal;
+    }
+    const heightRange = maxY - minY || 1;
+
+    // Gradient colors matching the premium theme: Green (#4af0b4) -> Yellow (#eab308) -> Red (#ef4444)
+    const colorGreen = new THREE.Color('#4af0b4');
+    const colorYellow = new THREE.Color('#eab308');
+    const colorRed = new THREE.Color('#ef4444');
+    const tempColor = new THREE.Color();
+
+    for (let i = 0; i < actualCount; i++) {
+        const yVal = positions[i * 3 + 1];
+        const t = (yVal - minY) / heightRange; // 0.0 to 1.0
+
+        if (t < 0.5) {
+            tempColor.lerpColors(colorGreen, colorYellow, t * 2);
         } else {
-            colors[i * 3] = fallback.r; colors[i * 3 + 1] = fallback.g; colors[i * 3 + 2] = fallback.b;
+            tempColor.lerpColors(colorYellow, colorRed, (t - 0.5) * 2);
         }
+
+        colors[i * 3] = tempColor.r;
+        colors[i * 3 + 1] = tempColor.g;
+        colors[i * 3 + 2] = tempColor.b;
     }
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
